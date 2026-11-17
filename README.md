@@ -25,9 +25,10 @@ A Python command-line application for managing products, tracking stock, recordi
    python main.py
    
 3. Follow the menu instructions.
-Data Storage
+## Data Storage
 Product and sales data are stored locally in a data.json file. The program loads the saved data when it starts.
-Project Structure
+
+## Project Structure
 - main.py — runs the menu and connects the program sections
 - products.py — contains the Product class
 - Inventory.py — manages the product inventory

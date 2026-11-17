@@ -1,65 +1,55 @@
 from sales import sales
-from products import products
 
-def view_sales():
-    if sales is None:
+def view_sales(sales):
+    if not sales :
         print('No sales recorded yet.')
-        return None
+        return 
+    
     print('=== Sales Report ===')
-    for item in sales:
-        print(f'Product : {sales['product_name']}')
-        print(f'Quantity sold : {sales['quantity']}')
-        print(f'Total_price : {sales['total_price']}')
+    for sale in sales:
+        print(f'Product : {sale['product_name']}')
+        print(f'Quantity sold : {sale['quantity']}')
+        print(f'Total_price : {sale['total_price']}')
         print('_'*25)
 
 
-def calculate_total_revenue():
-    total_revenue = 0
+def calculate_total_revenue(sales):
+    return sum(sale["total_price"] for sale in sales)
 
-    for sale in sales:
-        total_revenue +=sale['total_price']
-
-    return total_revenue
-
-def inventory_report():
+def inventory_report(inventory):
     print('===== Inventory Report =====')
-    if not products:
+
+    if not inventory.products:
         print('No product available.')
         return 
-    for product in products:
-        print(f'Product Name : {product['name']}')
-        print(f'Price : {product['price']}')
-        print(f'Quantitiy : {product['quantity']}')
+    
+    for product in inventory.products:
+        print(f'Product Name : {product.name}')
+        print(f'Price : {product.price}')
+        print(f'Quantitiy : {product.quantity}')
         print('_'*30)
 
-def low_stock_report():
-    print('====== Low Product ======')
-    if not products:
-        print('No product available.')
-        return
-    
-    low_stock_report = False
+def low_stock_report(inventory):
+    print("===== Low Stock Report =====")
 
-    for product in products:
-        if product['quantity'] <= 3:
-            print(f'Product Name : {product['name']}')
-            print(f'Quantitiy : {product['quantity']}')
-            print('_'*30)  
-            low_stock_report = True
+    if not inventory.products:
+            print("No products available.")
+            return
 
-    if not low_stock_report:
+    found_low_stock = False
+
+    for product in inventory. products:
+        if product.quantity <= 3:
+            print(f'Product Name : {product.name}')
+            print(f'Quantitiy : {product.quantity}')
+            print('_'*30,'\n')  
+            found_low_stock = True
+
+    if not found_low_stock:
         print('No low_stock products found.')
 
 
-def revenue_report():
-    print('=== Revenue Report ===')
-    total_revenue = calculate_total_revenue()
-    print(F'Total Revenue : {total_revenue}')
-
-
-from sales import record_sale
-from products import add_product
-
-add_product(2,'Mouse',20,10)
-record_sale(2,3)
-revenue_report()
+def revenue_report(sales):
+    print('\n=== Revenue Report ===')
+    total_revenue = calculate_total_revenue(sales)
+    print(F'Total Revenue : {total_revenue}\n')
